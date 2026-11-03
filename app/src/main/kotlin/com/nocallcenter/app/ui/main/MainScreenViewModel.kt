@@ -1,12 +1,18 @@
 package com.nocallcenter.app.ui.main
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nocallcenter.app.data.AppState
 import com.nocallcenter.app.data.DataRepository
+import com.nocallcenter.app.util.UpdateCheckResult
+import com.nocallcenter.app.util.UpdateChecker
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class MainScreenViewModel(private val repository: DataRepository) : ViewModel() {
 
@@ -16,6 +22,38 @@ class MainScreenViewModel(private val repository: DataRepository) : ViewModel() 
             SharingStarted.WhileSubscribed(5000),
             AppState()
         )
+
+    var updateCheckResult by mutableStateOf<UpdateCheckResult?>(null)
+        private set
+
+    var isCheckingUpdate by mutableStateOf(false)
+        private set
+
+    var showUpdateDialog by mutableStateOf(false)
+        private set
+
+    fun checkForUpdates(currentVersion: String, isManual: Boolean = false) {
+        if (!isManual && !appState.value.isAutoCheckUpdatesEnabled) return
+
+        viewModelScope.launch {
+            isCheckingUpdate = true
+            val result = UpdateChecker.checkForUpdate(currentVersion)
+            isCheckingUpdate = false
+            updateCheckResult = result
+
+            if (result is UpdateCheckResult.Available) {
+                showUpdateDialog = true
+            }
+        }
+    }
+
+    fun dismissUpdateDialog() {
+        showUpdateDialog = false
+    }
+
+    fun clearUpdateResultFeedback() {
+        updateCheckResult = null
+    }
 
     fun reload() = repository.reloadState()
 
@@ -34,6 +72,8 @@ class MainScreenViewModel(private val repository: DataRepository) : ViewModel() 
     fun setBillingCycleDay(day: Int) = repository.setBillingCycleDay(day)
 
     fun setAntiFloodEnabled(enabled: Boolean) = repository.setAntiFloodEnabled(enabled)
+
+    fun setAutoCheckUpdatesEnabled(enabled: Boolean) = repository.setAutoCheckUpdatesEnabled(enabled)
 
     fun setSmsTemplate(template: String) = repository.setSmsTemplate(template)
 

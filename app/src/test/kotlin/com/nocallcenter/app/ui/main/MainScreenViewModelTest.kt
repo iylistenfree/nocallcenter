@@ -55,6 +55,7 @@ private class FakeDataRepository : DataRepository {
     override fun setSmsBudgetLimit(limit: Int) { _state.value = _state.value.copy(smsBudgetLimit = limit) }
     override fun setBillingCycleDay(day: Int) { _state.value = _state.value.copy(billingCycleDay = day) }
     override fun setAntiFloodEnabled(enabled: Boolean) { _state.value = _state.value.copy(isAntiFloodEnabled = enabled) }
+    override fun setAutoCheckUpdatesEnabled(enabled: Boolean) { _state.value = _state.value.copy(isAutoCheckUpdatesEnabled = enabled) }
     override fun setSmsTemplate(template: String) { _state.value = _state.value.copy(smsTemplate = template) }
     override fun resetSmsTemplate() { _state.value = _state.value.copy(smsTemplate = "") }
     override fun clearCallHistory() { _state.value = _state.value.copy(screenedCalls = emptyList()) }

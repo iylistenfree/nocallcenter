@@ -114,4 +114,18 @@
     <string name="about_privacy_desc">NoCallCenter runs entirely on your device. Your contacts, call history, and messages never leave your phone. No cloud servers, no account registration, no tracking.</string>
     <string name="about_view_guide">View Permission Setup Guide</string>
     <string name="about_version">Version %1$s</string>
+
+    <!-- Update Checker -->
+    <string name="update_dialog_title">Update Available!</string>
+    <string name="update_dialog_msg">A new version of NoCallCenter (%1$s) is available on GitHub. Would you like to download it?</string>
+    <string name="update_dialog_notes_title">What\'s new:</string>
+    <string name="btn_download_update">Download Update</string>
+    <string name="btn_later">Later</string>
+    <string name="btn_check_updates">Check for Updates</string>
+    <string name="update_checking">Checking for updates...</string>
+    <string name="update_already_latest">You\'re running the latest version!</string>
+    <string name="update_check_failed">Could not check for updates. Check your connection and try again.</string>
+    <string name="setting_auto_check_updates">Check for Updates Automatically</string>
+    <string name="setting_auto_check_updates_desc">Notify on startup when a new release is available on GitHub.</string>
+    <string name="about_internet_notice">Internet access is used exclusively to query GitHub Releases for new updates. No personal data, contacts or logs ever leave your device.</string>
 </resources>

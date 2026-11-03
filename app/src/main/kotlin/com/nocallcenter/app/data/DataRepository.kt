@@ -20,6 +20,7 @@ data class AppState(
     val smsBudgetLimit: Int = 40,
     val billingCycleDay: Int = 1,
     val isAntiFloodEnabled: Boolean = true,
+    val isAutoCheckUpdatesEnabled: Boolean = true,
     val smsTemplate: String = "",
     val paypalUrl: String = AppPreferences.PAYPAL_URL,
     val screenedCalls: List<ScreenedCall> = emptyList(),
@@ -39,6 +40,7 @@ interface DataRepository {
     fun setSmsBudgetLimit(limit: Int)
     fun setBillingCycleDay(day: Int)
     fun setAntiFloodEnabled(enabled: Boolean)
+    fun setAutoCheckUpdatesEnabled(enabled: Boolean)
     fun setSmsTemplate(template: String)
     fun resetSmsTemplate()
     fun clearCallHistory()
@@ -75,6 +77,7 @@ class DefaultDataRepository(private val context: Context) : DataRepository {
             smsBudgetLimit = prefs.smsBudgetLimit,
             billingCycleDay = prefs.billingCycleDay,
             isAntiFloodEnabled = prefs.isAntiFloodEnabled,
+            isAutoCheckUpdatesEnabled = prefs.isAutoCheckUpdatesEnabled,
             smsTemplate = prefs.customSmsTemplate,
             paypalUrl = AppPreferences.PAYPAL_URL,
             screenedCalls = db.getAllCalls(limit = 100),
@@ -125,6 +128,11 @@ class DefaultDataRepository(private val context: Context) : DataRepository {
 
     override fun setAntiFloodEnabled(enabled: Boolean) {
         prefs.isAntiFloodEnabled = enabled
+        reloadState()
+    }
+
+    override fun setAutoCheckUpdatesEnabled(enabled: Boolean) {
+        prefs.isAutoCheckUpdatesEnabled = enabled
         reloadState()
     }
 

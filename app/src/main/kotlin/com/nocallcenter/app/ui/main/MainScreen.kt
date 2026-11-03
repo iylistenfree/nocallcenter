@@ -35,6 +35,8 @@ import com.nocallcenter.app.R
 import com.nocallcenter.app.data.AppState
 import com.nocallcenter.app.data.model.CallScreeningOutcome
 import com.nocallcenter.app.data.model.ScreenedCall
+import com.nocallcenter.app.util.UpdateCheckResult
+import com.nocallcenter.app.util.UpdateInfo
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -75,6 +77,18 @@ fun MainScreen(
         onDispose { }
     }
 
+    val versionName = remember {
+        try {
+            context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "1.0.1"
+        } catch (e: Exception) {
+            "1.0.1"
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.checkForUpdates(versionName, isManual = false)
+    }
+
     // If first launch, show Onboarding landing screen!
     if (state.isFirstLaunch) {
         OnboardingScreen(
@@ -85,6 +99,21 @@ fun MainScreen(
 
     if (showGuideDialog) {
         PermissionGuideDialog(onDismiss = { showGuideDialog = false })
+    }
+
+    if (viewModel.showUpdateDialog && viewModel.updateCheckResult is UpdateCheckResult.Available) {
+        val info = (viewModel.updateCheckResult as UpdateCheckResult.Available).info
+        UpdateAvailableDialog(
+            info = info,
+            onDownload = {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(info.downloadUrl)).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+                context.startActivity(browserIntent)
+                viewModel.dismissUpdateDialog()
+            },
+            onDismiss = { viewModel.dismissUpdateDialog() }
+        )
     }
 
     Scaffold(
@@ -177,6 +206,8 @@ fun MainScreen(
                     }
                 )
                 AppTab.ABOUT -> AboutContent(
+                    versionName = versionName,
+                    viewModel = viewModel,
                     onShowPermissionGuide = { showGuideDialog = true }
                 )
             }
@@ -1057,6 +1088,41 @@ fun SettingsContent(
             }
         }
 
+        // Section: Updates
+        Text(
+            text = stringResource(R.string.btn_check_updates),
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Bold
+        )
+
+        Card(shape = RoundedCornerShape(16.dp)) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringResource(R.string.setting_auto_check_updates),
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Text(
+                            text = stringResource(R.string.setting_auto_check_updates_desc),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = state.isAutoCheckUpdatesEnabled,
+                        onCheckedChange = { viewModel.setAutoCheckUpdatesEnabled(it) }
+                    )
+                }
+            }
+        }
+
         // Permissions Section
         Text(
             text = stringResource(R.string.settings_permissions_section),
@@ -1078,7 +1144,11 @@ fun SettingsContent(
 }
 
 @Composable
-fun AboutContent(onShowPermissionGuide: () -> Unit) {
+fun AboutContent(
+    versionName: String,
+    viewModel: MainScreenViewModel,
+    onShowPermissionGuide: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -1109,12 +1179,109 @@ fun AboutContent(onShowPermissionGuide: () -> Unit) {
         )
 
         Text(
-            text = stringResource(R.string.about_version, "1.1.0"),
+            text = stringResource(R.string.about_version, versionName),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.outline
         )
 
         Spacer(modifier = Modifier.height(8.dp))
+
+        // Update Card
+        Card(
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        text = stringResource(R.string.btn_check_updates),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                Text(
+                    text = stringResource(R.string.about_internet_notice),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+
+                Button(
+                    onClick = { viewModel.checkForUpdates(versionName, isManual = true) },
+                    enabled = !viewModel.isCheckingUpdate,
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    if (viewModel.isCheckingUpdate) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(18.dp),
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            strokeWidth = 2.dp
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(stringResource(R.string.update_checking))
+                    } else {
+                        Icon(Icons.Default.Refresh, contentDescription = null)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(stringResource(R.string.btn_check_updates))
+                    }
+                }
+
+                // Feedback message after check
+                when (viewModel.updateCheckResult) {
+                    is UpdateCheckResult.UpToDate -> {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.CheckCircle,
+                                contentDescription = null,
+                                tint = Color(0xFF2E7D32),
+                                modifier = Modifier.size(18.dp)
+                            )
+                            Text(
+                                text = stringResource(R.string.update_already_latest),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Color(0xFF2E7D32),
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
+                    }
+                    is UpdateCheckResult.Error -> {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Warning,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.size(18.dp)
+                            )
+                            Text(
+                                text = stringResource(R.string.update_check_failed),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
+                    }
+                    else -> {}
+                }
+            }
+        }
 
         // Privacy First card
         Card(
@@ -1179,6 +1346,80 @@ fun AboutContent(onShowPermissionGuide: () -> Unit) {
             Text(stringResource(R.string.about_view_guide))
         }
     }
+}
+
+@Composable
+fun UpdateAvailableDialog(
+    info: UpdateInfo,
+    onDownload: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = {
+            Icon(
+                imageVector = Icons.Default.SystemUpdate,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(36.dp)
+            )
+        },
+        title = {
+            Text(
+                text = stringResource(R.string.update_dialog_title),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+        },
+        text = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = stringResource(R.string.update_dialog_msg, info.tagName),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+
+                if (info.releaseNotes.isNotBlank()) {
+                    Text(
+                        text = stringResource(R.string.update_dialog_notes_title),
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Surface(
+                        color = MaterialTheme.colorScheme.surfaceVariant,
+                        shape = RoundedCornerShape(8.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = info.releaseNotes,
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .heightIn(max = 140.dp)
+                                .verticalScroll(rememberScrollState())
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = onDownload,
+                shape = RoundedCornerShape(10.dp)
+            ) {
+                Text(stringResource(R.string.btn_download_update))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.btn_later))
+            }
+        }
+    )
 }
 
 @Composable

@@ -114,4 +114,18 @@
     <string name="about_privacy_desc">NoCallCenter opera interamente sul tuo smartphone. Rubrica, registro chiamate e messaggi non lasciano mai il telefono. Nessun server esterno, nessuna registrazione, nessun tracciamento.</string>
     <string name="about_view_guide">Rivedi Guida Sblocco Permessi</string>
     <string name="about_version">Versione %1$s</string>
+
+    <!-- Update Checker -->
+    <string name="update_dialog_title">Aggiornamento Disponibile!</string>
+    <string name="update_dialog_msg">È disponibile una nuova versione di NoCallCenter (%1$s) su GitHub. Vuoi scaricarla?</string>
+    <string name="update_dialog_notes_title">Novità:</string>
+    <string name="btn_download_update">Scarica Aggiornamento</string>
+    <string name="btn_later">Più tardi</string>
+    <string name="btn_check_updates">Verifica Aggiornamenti</string>
+    <string name="update_checking">Verifica in corso...</string>
+    <string name="update_already_latest">Stai già usando l\'ultima versione disponibile!</string>
+    <string name="update_check_failed">Impossibile verificare gli aggiornamenti. Controlla la connessione.</string>
+    <string name="setting_auto_check_updates">Controlla aggiornamenti automaticamente</string>
+    <string name="setting_auto_check_updates_desc">Mostra un avviso all\'apertura se è presente una nuova versione su GitHub.</string>
+    <string name="about_internet_notice">La connessione internet è impiegata esclusivamente per verificare le nuove versioni su GitHub. Nessun contatto, dato personale o registro lascia mai il tuo smartphone.</string>
 </resources>

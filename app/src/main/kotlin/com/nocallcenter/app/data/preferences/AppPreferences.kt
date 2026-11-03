@@ -59,6 +59,18 @@ class AppPreferences(private val context: Context) {
         prefs.edit().remove(KEY_SMS_TEMPLATE).apply()
     }
 
+    var isAutoCheckUpdatesEnabled: Boolean
+        get() = prefs.getBoolean(KEY_AUTO_CHECK_UPDATES, true)
+        set(value) = prefs.edit().putBoolean(KEY_AUTO_CHECK_UPDATES, value).apply()
+
+    var lastUpdateCheckTimestamp: Long
+        get() = prefs.getLong(KEY_LAST_UPDATE_CHECK, 0L)
+        set(value) = prefs.edit().putLong(KEY_LAST_UPDATE_CHECK, value).apply()
+
+    var dismissedUpdateTag: String
+        get() = prefs.getString(KEY_DISMISSED_UPDATE_TAG, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_DISMISSED_UPDATE_TAG, value).apply()
+
     val paypalUrl: String = PAYPAL_URL
 
     companion object {
@@ -76,5 +88,8 @@ class AppPreferences(private val context: Context) {
         private const val KEY_ANTI_FLOOD_HOURS = "pref_anti_flood_hours"
         private const val KEY_SMS_TEMPLATE = "pref_sms_template"
         private const val KEY_PAYPAL_USERNAME = "pref_paypal_username"
+        private const val KEY_AUTO_CHECK_UPDATES = "pref_auto_check_updates"
+        private const val KEY_LAST_UPDATE_CHECK = "pref_last_update_check"
+        private const val KEY_DISMISSED_UPDATE_TAG = "pref_dismissed_update_tag"
     }
 }
