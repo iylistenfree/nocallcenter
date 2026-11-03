@@ -49,7 +49,8 @@ On **Android 13, 14, and 15**, Google enables a security feature called **"Restr
 
 #### 📲 How to enable it (takes 30 seconds):
 
-1. **Download and install** [`nocallcenter.apk`](https://github.com/iylistenfree/nocallcenter/releases).
+1. **Download and install** [`nocallcenter.apk`](https://github.com/gabrilc/nocallcenter/releases).   [**DOWNLOAD**](https://github.com/iylistenfree/nocallcenter/releases/tag/v1.0.0)\
+   (say yes to Google scan and click ‘Install’).
 2. On first launch, tap **"Open App Info Settings"** *(or go to phone Settings \> Apps \> NoCallCenter)*.
 3. Open **Permissions** \> tap **SMS** \> **tap "Allow" (even if greyed out and unselectable)**: Android will show a "Restricted setting" alert. Tap **OK**.
 4. Go back one screen to *App Info*: tap the **three vertical dots (⋮)** in the top-right corner. *(The hidden option will now be visible!)*
@@ -110,7 +111,8 @@ Su **Android 13, 14 e 15**, Google ha introdotto una protezione chiamata **"Impo
 
 #### 📲 Procedura di sblocco (30 secondi):
 
-1. **Scarica e installa** l'ultima versione di [`nocallcenter.apk`](https://github.com/iylistenfree/nocallcenter/releases).
+1. **Scarica e installa** l'ultima versione di [`nocallcenter.apk`](https://github.com/gabrilc/nocallcenter/releases).  [**DOWNLOAD**](https://github.com/iylistenfree/nocallcenter/releases/tag/v1.0.0)\
+   (permetti il controllo di Google per vedere il pulsante “Installa”)
 2. All'apertura dell'app, tocca **"Apri Informazioni App"** nella schermata di benvenuto *(oppure vai in Impostazioni del telefono \> App \> NoCallCenter)*.
 3. Entra in **Autorizzazioni** \> tocca **SMS** \> **tocca "Consenti" (anche se è in grigio e non cliccabile)**: comparirà un popup di sicurezza di Android. Tocca **OK**.
 4. Torna indietro di una schermata (su *Informazioni app*): tocca i **3 puntini verticali in alto a destra (⋮)**. *Ora la voce sarà magicamente apparsa!*
