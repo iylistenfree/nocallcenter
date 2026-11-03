@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Shield Base Drop Shadow -->
+    <path
+        android:fillColor="#33000000"
+        android:pathData="M54,23 L79,33 C79,56 68,72 54,82 C40,72 29,56 29,33 Z" />
+
+    <!-- Protective Shield Gradient -->
+    <path android:pathData="M54,21 L78,31 C78,54 67,70 54,80 C41,70 30,54 30,31 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endX="78"
+                android:endY="80"
+                android:startX="30"
+                android:startY="21"
+                android:type="linear">
+                <item android:color="#00B4D8" android:offset="0.0" />
+                <item android:color="#0077B6" android:offset="0.6" />
+                <item android:color="#023E8A" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Shield Inner Border Highlight -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M54,24 L75,33 C75,53 65,67 54,76 C43,67 33,53 33,33 Z"
+        android:strokeWidth="1.5"
+        android:strokeColor="#55FFFFFF" />
+
+    <!-- Phone Receiver Icon (White) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M44.5,40.5 C43.5,40.5 42.5,41.2 42.2,42.2 C41.5,44.5 41.5,47.8 43.5,51.5 C45.5,55.2 48.5,58.2 52.2,60.2 C55.9,62.2 59.2,62.2 61.5,61.5 C62.5,61.2 63.2,60.2 63.2,59.2 L63.2,56.5 C63.2,55.5 62.5,54.7 61.5,54.5 L58.2,53.8 C57.4,53.6 56.5,54 56,54.6 L54.8,56 C52.5,54.8 50.8,53.1 49.6,50.8 L51,49.6 C51.6,49.1 52,48.2 51.8,47.4 L51.1,44.1 C50.9,43.1 50.1,42.4 49.1,42.4 Z" />
+
+    <!-- Anti-Spam Protective Slash / Diagonal Barrier (Vibrant Coral Red with White Outline) -->
+    <path
+        android:fillColor="#EF4444"
+        android:pathData="M66,35 L69,38 L42,67 L39,64 Z" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M66,35 L69,38 L42,67 L39,64 Z"
+        android:strokeWidth="1"
+        android:strokeColor="#FFFFFF" />
+
+</vector>

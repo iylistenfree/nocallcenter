@@ -1,0 +1,117 @@
+<resources>
+    <string name="app_name">NoCallCenter</string>
+    <string name="app_tagline">Smart Anti-Spam &amp; Call Screening</string>
+
+    <!-- Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_history">History</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_about">About</string>
+
+    <!-- Onboarding / Welcome -->
+    <string name="onboarding_welcome_title">Welcome to NoCallCenter</string>
+    <string name="onboarding_welcome_subtitle">Your privacy-first defense against telemarketing</string>
+    <string name="onboarding_how_it_works_title">How It Works</string>
+    <string name="onboarding_step1_title">1. Instant Call Screening</string>
+    <string name="onboarding_step1_desc">Incoming calls from numbers not in your contacts are automatically declined without ringing.</string>
+    <string name="onboarding_step2_title">2. Smart Auto-SMS &amp; WhatsApp</string>
+    <string name="onboarding_step2_desc">The app sends an automatic SMS citing the Do Not Call Registry and invites legitimate callers (couriers, doctors) to write on WhatsApp.</string>
+    <string name="onboarding_step3_title">3. SMS Credit Protection</string>
+    <string name="onboarding_step3_desc">Built-in monthly budget limiter and 48-hour anti-flood protection so you never waste your SMS plan.</string>
+    
+    <string name="onboarding_perm_guide_title">Android 14/15 Permission Setup</string>
+    <string name="onboarding_perm_guide_desc">Google blocks SMS permissions for sideloaded apps. To make the 3-dots option appear, follow this exact sequence:</string>
+    <string name="onboarding_perm_step1">1. Tap \"Open App Info Settings\" below, go to \"Permissions\", tap \"SMS\", tap \"Allow\" (even if greyed out and unselectable) and tap \"OK\" on the restricted popup.</string>
+    <string name="onboarding_perm_step2">2. Go back to App Info: tap the 3 dots in the top-right corner (⋮) (it will now appear!).</string>
+    <string name="onboarding_perm_step3">3. Tap \"Allow restricted settings\" and confirm with fingerprint or PIN.</string>
+    <string name="onboarding_perm_step4">4. Re-enter Permissions > SMS and select \"Allow\".</string>
+    <string name="btn_open_app_settings">Open App Info Settings</string>
+    <string name="btn_get_started">Get Started</string>
+
+    <!-- Dashboard -->
+    <string name="status_active">Call Screening Active</string>
+    <string name="status_inactive">Call Screening Paused</string>
+    <string name="status_active_desc">Calls from numbers not in your contacts will be screened.</string>
+    <string name="status_inactive_desc">Screening is disabled. All calls will ring normally.</string>
+    <string name="role_required_title">Default Call Screening App</string>
+    <string name="role_required_desc">Android requires NoCallCenter to be selected as your Call Screening app to intercept calls.</string>
+    <string name="btn_set_screening_role">Set as Default Screener</string>
+    
+    <!-- Stats -->
+    <string name="stat_blocked_total">Calls Blocked</string>
+    <string name="stat_sms_sent">SMS Auto-Sent</string>
+    <string name="stat_calls_saved">Time Saved</string>
+
+    <!-- SMS Budget Card -->
+    <string name="budget_card_title">Monthly SMS Budget</string>
+    <string name="budget_unlimited_badge">Unlimited Plan</string>
+    <string name="budget_usage_format">%1$d of %2$d SMS used</string>
+    <string name="budget_unlimited_usage_format">%1$d SMS sent this cycle</string>
+    <string name="budget_resets_on">Cycle renews on day %1$d</string>
+    <string name="budget_exhausted_warning">Monthly SMS budget reached! Calls will still be blocked, but auto-SMS is suspended until renewal.</string>
+
+    <!-- PayPal Coffee Donation on Dashboard -->
+    <string name="coffee_card_title">Peace of mind restored?</string>
+    <string name="coffee_card_desc">NoCallCenter is 100% free, private and open-source. If it saved you from annoying telemarketing calls, support the project with a coffee via PayPal!</string>
+    <string name="btn_buy_coffee_paypal">Buy Me a Coffee on PayPal</string>
+    <string name="notif_action_coffee">☕ Buy me a coffee</string>
+    <string name="notif_satisfied_note">Satisfied? Tap to buy me a coffee on PayPal!</string>
+
+    <!-- History / Call Log -->
+    <string name="history_title">Screened Calls</string>
+    <string name="history_empty">No screened calls yet. When an unknown number calls, it will appear here.</string>
+    <string name="history_clear">Clear history</string>
+    <string name="history_clear_confirm">Are you sure you want to clear the screened calls history?</string>
+    <string name="status_blocked_sms_sent">Blocked &amp; SMS Sent</string>
+    <string name="status_blocked_sms_skipped_flood">Blocked (Anti-Flood)</string>
+    <string name="status_blocked_sms_skipped_budget">Blocked (Budget Limit)</string>
+    <string name="status_blocked_sms_disabled">Blocked (SMS Disabled)</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_screening_section">Call Screening</string>
+    <string name="setting_block_non_contacts">Filter Unknown Callers</string>
+    <string name="setting_block_non_contacts_desc">Automatically silence and decline calls from numbers not saved in your contacts.</string>
+    
+    <string name="settings_sms_section">Auto-Response SMS</string>
+    <string name="setting_enable_sms">Send Automatic SMS</string>
+    <string name="setting_enable_sms_desc">Send a response message to unknown callers redirecting them to WhatsApp.</string>
+    
+    <string name="setting_enable_budget">SMS Budget Limit (Salva-Credito)</string>
+    <string name="setting_enable_budget_desc">Keep this enabled if your mobile plan has limited monthly SMS.</string>
+    <string name="setting_budget_max">Monthly SMS Limit</string>
+    <string name="setting_billing_day">Monthly Billing Renewal Day</string>
+    <string name="setting_billing_day_desc">Day of the month when your operator renews your mobile plan (1–31).</string>
+    
+    <string name="setting_anti_flood">Anti-Flood Protection (48h)</string>
+    <string name="setting_anti_flood_desc">Send maximum 1 SMS per number every 48 hours to prevent spam dialers from burning your budget.</string>
+    
+    <string name="setting_sms_template">SMS Message Template</string>
+    <string name="setting_sms_template_desc">The text sent to blocked callers. Keep it within 160 characters to avoid multiple SMS charges.</string>
+    <string name="default_sms_template">NOTICE: This number is listed on the Public Do Not Call Registry. Unsolicited marketing calls are blocked and reported. If this is an urgent or legitimate call, please contact me on WhatsApp.</string>
+    
+    <string name="settings_paypal_section">Support &amp; Donations</string>
+    <string name="setting_paypal_username">PayPal.me Username</string>
+    <string name="setting_paypal_username_desc">Enter your PayPal.me link or handle to receive coffees directly.</string>
+
+    <string name="settings_permissions_section">Required Permissions</string>
+    <string name="perm_contacts">Contacts (To verify saved numbers)</string>
+    <string name="perm_sms">Send SMS (To reply to blocked callers)</string>
+    <string name="perm_notifications">Notifications (To notify on blocked calls and budget alerts)</string>
+
+    <!-- Shared Actions & Badges -->
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_close">Close</string>
+    <string name="btn_reset_default">Default</string>
+    <string name="btn_check_grant_permissions">Check &amp; Grant Permissions</string>
+    <string name="badge_contacts">Contacts</string>
+    <string name="caller_unknown">Unknown</string>
+    <string name="billing_day_format">day %1$d</string>
+
+    <!-- About -->
+    <string name="about_title">About &amp; Privacy</string>
+    <string name="about_privacy_title">100% Privacy-First &amp; On-Device</string>
+    <string name="about_privacy_desc">NoCallCenter runs entirely on your device. Your contacts, call history, and messages never leave your phone. No cloud servers, no account registration, no tracking.</string>
+    <string name="about_view_guide">View Permission Setup Guide</string>
+    <string name="about_version">Version %1$s</string>
+</resources>

@@ -1,0 +1,117 @@
+<resources>
+    <string name="app_name">NoCallCenter</string>
+    <string name="app_tagline">Filtro Chiamate Intelligente &amp; Anti-Telemarketing</string>
+
+    <!-- Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_history">Registro</string>
+    <string name="nav_settings">Impostazioni</string>
+    <string name="nav_about">Info</string>
+
+    <!-- Onboarding / Welcome -->
+    <string name="onboarding_welcome_title">Benvenuto su NoCallCenter</string>
+    <string name="onboarding_welcome_subtitle">La tua difesa intelligente e gratuita contro le chiamate moleste</string>
+    <string name="onboarding_how_it_works_title">Come Funziona l\'App</string>
+    <string name="onboarding_step1_title">1. Filtro Chiamate Istantaneo</string>
+    <string name="onboarding_step1_desc">Le chiamate da numeri non presenti nei tuoi contatti vengono rifiutate e silenziate all\'istante senza far squillare il telefono.</string>
+    <string name="onboarding_step2_title">2. Risposta Intelligente con WhatsApp</string>
+    <string name="onboarding_step2_desc">L\'app invia un SMS automatico ricordando l\'iscrizione al Registro delle Opposizioni e invita corrieri, medici o conoscenti a contattarti su WhatsApp (i bot dei call center non usano WhatsApp!).</string>
+    <string name="onboarding_step3_title">3. Salva-Credito SMS &amp; Anti-Flood</string>
+    <string name="onboarding_step3_desc">Monitora il tuo plafond mensile e impedisce ai call center con richiamata automatica di consumare i tuoi SMS grazie al blocco anti-flood di 48 ore.</string>
+    
+    <string name="onboarding_perm_guide_title">Sblocco Autorizzazioni Android 14/15</string>
+    <string name="onboarding_perm_guide_desc">Google blocca i permessi SMS per le app installate manualmente. Per far apparire l\'opzione nei 3 puntini serve questo esatto passaggio:</string>
+    <string name="onboarding_perm_step1">1. Tocca \"Apri Informazioni App\" qui sotto, vai su \"Autorizzazioni\", tocca \"SMS\", tocca \"Consenti\" (anche se in grigio e non selezionabile) e tocca \"OK\" sull\'avviso di blocco.</string>
+    <string name="onboarding_perm_step2">2. Torna indietro a Informazioni app: tocca i 3 puntini in alto a destra (⋮) (ora la voce apparirà!).</string>
+    <string name="onboarding_perm_step3">3. Seleziona \"Consenti impostazioni con restrizioni\" e conferma con impronta o PIN.</string>
+    <string name="onboarding_perm_step4">4. Rientra in Autorizzazioni > SMS e seleziona finalmente \"Consenti\".</string>
+    <string name="btn_open_app_settings">Apri Informazioni App</string>
+    <string name="btn_get_started">Inizia a Usare NoCallCenter</string>
+
+    <!-- Dashboard -->
+    <string name="status_active">Filtro Chiamate Attivo</string>
+    <string name="status_inactive">Filtro Chiamate in Pausa</string>
+    <string name="status_active_desc">Le chiamate da numeri non presenti nei contatti vengono schermate e respinte.</string>
+    <string name="status_inactive_desc">Il filtro è disattivato. Tutte le chiamate squilleranno normalmente.</string>
+    <string name="role_required_title">App Filtro Chiamate Predefinita</string>
+    <string name="role_required_desc">Android richiede che NoCallCenter sia impostata come app predefinita per il filtro chiamate al fine di intercettare i numeri.</string>
+    <string name="btn_set_screening_role">Imposta come App Predefinita</string>
+    
+    <!-- Stats -->
+    <string name="stat_blocked_total">Chiamate Respinte</string>
+    <string name="stat_sms_sent">SMS Inviati</string>
+    <string name="stat_calls_saved">Tempo Risparmiato</string>
+
+    <!-- SMS Budget Card -->
+    <string name="budget_card_title">Salva-Credito SMS Mensile</string>
+    <string name="budget_unlimited_badge">Piano Illimitato</string>
+    <string name="budget_usage_format">%1$d di %2$d SMS utilizzati</string>
+    <string name="budget_unlimited_usage_format">%1$d SMS inviati in questo ciclo</string>
+    <string name="budget_resets_on">Rinnovo offerta il giorno %1$d</string>
+    <string name="budget_exhausted_warning">Limite SMS mensile raggiunto! Le chiamate continueranno a essere bloccate, ma l\'invio di SMS è sospeso fino al rinnovo.</string>
+
+    <!-- PayPal Coffee Donation on Dashboard -->
+    <string name="coffee_card_title">Tranquillità ritrovata?</string>
+    <string name="coffee_card_desc">NoCallCenter è gratuita, senza pubblicità e rispetta al 100% la tua privacy. Se ti ha liberato dall\'incubo dei call center, sostieni il progetto offrendomi un caffè con un semplice passaggio tra amici su PayPal!</string>
+    <string name="btn_buy_coffee_paypal">☕ Offrimi un Caffè su PayPal</string>
+    <string name="notif_action_coffee">☕ Offrimi un caffè</string>
+    <string name="notif_satisfied_note">Sei soddisfatto? Offrimi un caffè su PayPal!</string>
+
+    <!-- History / Call Log -->
+    <string name="history_title">Chiamate Schermate</string>
+    <string name="history_empty">Nessuna chiamata schermata finora. Quando un numero sconosciuto chiamerà, comparirà qui.</string>
+    <string name="history_clear">Svuota registro</string>
+    <string name="history_clear_confirm">Vuoi davvero cancellare la cronologia delle chiamate schermate?</string>
+    <string name="status_blocked_sms_sent">Bloccata &amp; SMS Inviato</string>
+    <string name="status_blocked_sms_skipped_flood">Bloccata (Anti-Flood 48h)</string>
+    <string name="status_blocked_sms_skipped_budget">Bloccata (Limite SMS raggiunto)</string>
+    <string name="status_blocked_sms_disabled">Bloccata (SMS Disattivato)</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Impostazioni</string>
+    <string name="settings_screening_section">Filtro Chiamate</string>
+    <string name="setting_block_non_contacts">Blocca Numeri Fuori Rubrica</string>
+    <string name="setting_block_non_contacts_desc">Rifiuta e silenzia istantaneamente le chiamate da numeri non memorizzati nei contatti.</string>
+    
+    <string name="settings_sms_section">Risposta Automatica via SMS</string>
+    <string name="setting_enable_sms">Invia SMS Automatico</string>
+    <string name="setting_enable_sms_desc">Invia un messaggio di chiarimento al chiamante invitandolo a scrivere su WhatsApp.</string>
+    
+    <string name="setting_enable_budget">Controllo Plafond SMS (Salva-Credito)</string>
+    <string name="setting_enable_budget_desc">Mantieni attivo se la tua tariffa mobile ha un numero limitato di SMS mensili (es. 50 SMS/mese).</string>
+    <string name="setting_budget_max">Soglia Massima SMS Mensile</string>
+    <string name="setting_billing_day">Giorno di Rinnovo Offerta</string>
+    <string name="setting_billing_day_desc">Giorno del mese in cui il tuo operatore rinnova l\'offerta telefonica (1–31).</string>
+    
+    <string name="setting_anti_flood">Protezione Anti-Flood (48h)</string>
+    <string name="setting_anti_flood_desc">Invia al massimo 1 SMS per numero ogni 48 ore per evitare che centralini insistenti consumino i tuoi messaggi.</string>
+    
+    <string name="setting_sms_template">Testo Messaggio SMS</string>
+    <string name="setting_sms_template_desc">Il messaggio inviato al numero bloccato. Mantienilo preferibilmente entro 160 caratteri per evitare addebiti multipli.</string>
+    <string name="default_sms_template">AVVISO: Numero iscritto al Registro Pubblico Opposizioni. Chiamate commerciali non sollecitate respinte e tracciate. Per comunicazioni urgenti o legittime scrivi su WhatsApp.</string>
+    
+    <string name="settings_paypal_section">Supporto &amp; Donazioni PayPal</string>
+    <string name="setting_paypal_username">Nome Utente PayPal.me</string>
+    <string name="setting_paypal_username_desc">Inserisci il tuo link o nome utente PayPal.me per ricevere donazioni direttamente (es. paypal.me/iltuonome).</string>
+
+    <string name="settings_permissions_section">Permessi Richiesti</string>
+    <string name="perm_contacts">Contatti (Per riconoscere i numeri in rubrica)</string>
+    <string name="perm_sms">Invio SMS (Per rispondere automaticamente ai numeri bloccati)</string>
+    <string name="perm_notifications">Notifiche (Per avvisi su chiamate bloccate ed esaurimento SMS)</string>
+
+    <!-- Shared Actions & Badges -->
+    <string name="btn_cancel">Annulla</string>
+    <string name="btn_close">Chiudi</string>
+    <string name="btn_reset_default">Predefinito</string>
+    <string name="btn_check_grant_permissions">Verifica e Concedi Permessi</string>
+    <string name="badge_contacts">Rubrica</string>
+    <string name="caller_unknown">Sconosciuto</string>
+    <string name="billing_day_format">giorno %1$d</string>
+
+    <!-- About -->
+    <string name="about_title">Info &amp; Privacy</string>
+    <string name="about_privacy_title">100% Privacy &amp; Locale sul Dispositivo</string>
+    <string name="about_privacy_desc">NoCallCenter opera interamente sul tuo smartphone. Rubrica, registro chiamate e messaggi non lasciano mai il telefono. Nessun server esterno, nessuna registrazione, nessun tracciamento.</string>
+    <string name="about_view_guide">Rivedi Guida Sblocco Permessi</string>
+    <string name="about_version">Versione %1$s</string>
+</resources>
