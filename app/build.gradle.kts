@@ -15,9 +15,26 @@ android {
     versionName = "1.0.1"
   }
 
+  signingConfigs {
+    create("release") {
+      val keystoreFile = file("../release.keystore")
+      if (keystoreFile.exists()) {
+        storeFile = keystoreFile
+        storePassword = "nocallcenter2026"
+        keyAlias = "nocallcenter"
+        keyPassword = "nocallcenter2026"
+      }
+    }
+  }
+
   buildTypes {
     release {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
+      isShrinkResources = true
+      val releaseSigning = signingConfigs.getByName("release")
+      if (releaseSigning.storeFile != null && releaseSigning.storeFile!!.exists()) {
+        signingConfig = releaseSigning
+      }
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
   }

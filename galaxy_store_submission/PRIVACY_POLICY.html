@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - NoCallCenter</title>
+    <style>
+        :root {
+            --primary: #0077b6;
+            --primary-dark: #023e8a;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 24px 16px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 36px 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+        h1 {
+            color: var(--primary-dark);
+            margin-top: 0;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 {
+            color: var(--primary);
+            font-size: 20px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 8px;
+            margin-top: 32px;
+        }
+        h3 {
+            font-size: 16px;
+            color: var(--text);
+            margin-top: 20px;
+        }
+        p, li {
+            color: var(--text);
+            font-size: 15px;
+        }
+        .badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .callout {
+            background-color: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <span class="badge">Informativa sulla Privacy</span>
+    <h1>NoCallCenter – Privacy Policy</h1>
+    <p><em>Ultimo aggiornamento: 5 Novembre 2026</em></p>
+
+    <div class="callout">
+        <strong>Principio Cardine:</strong> NoCallCenter è progettata per operare al <strong>100% sul tuo dispositivo (on-device)</strong>. Nessun dato relativo alla tua rubrica, alle chiamate o ai messaggi viene mai inviato a server cloud, condiviso o venduto a terze parti.
+    </div>
+
+    <h2>1. Titolare del Trattamento e Filosofia</h2>
+    <p>NoCallCenter è un'applicazione open source e gratuita sviluppata per difendere gli utenti dal telemarketing e dalle chiamate commerciali indesiderate.</p>
+    <ul>
+        <li><strong>Zero server cloud:</strong> L'applicazione non gestisce database remoti né memorizza i dati delle chiamate all'esterno dello smartphone.</li>
+        <li><strong>Nessun account:</strong> Non è richiesta alcuna registrazione o inserimento di email.</li>
+        <li><strong>Zero tracker e zero pubblicità:</strong> Nessuna libreria pubblicitaria o di profilazione comportamentale (come Firebase Analytics o Google AdMob).</li>
+    </ul>
+
+    <h2>2. Dati e Permessi Richiesti</h2>
+    <p>Per operare, l'applicazione richiede l'attivazione dei seguenti permessi di sistema Android, utilizzati rigorosamente in locale:</p>
+
+    <h3>A. Accesso ai Contatti (<code>android.permission.READ_CONTACTS</code>)</h3>
+    <p>Utilizzato unicamente al momento della ricezione di una chiamata per verificare in memoria RAM locale se il numero del chiamante è presente nella rubrica personale. Se il numero è salvato, la chiamata squilla regolarmente. I contatti non vengono mai esportati o salvati in modo permanente.</p>
+
+    <h3>B. Servizio Filtro Chiamate (<code>android.permission.BIND_SCREENING_SERVICE</code>)</h3>
+    <p>Permette all'app di operare come servizio di Call Screening predefinito di Android, consentendo il blocco e il silenziamento preventivo delle chiamate non salvate prima del primo squillo.</p>
+
+    <h3>C. Invio di SMS (<code>android.permission.SEND_SMS</code>)</h3>
+    <p>Utilizzato per inviare il messaggio di risposta automatica che invita i mittenti legittimi (es. corrieri, medici, amici) a scrivere su WhatsApp. La funzione è completamente personalizzabile e disattivabile dall'utente, ed è protetta da controlli salva-credito e da un limite anti-flood (massimo 1 SMS ogni 48 ore allo stesso numero).</p>
+
+    <h3>D. Notifiche (<code>android.permission.POST_NOTIFICATIONS</code>)</h3>
+    <p>Mostra notifiche locali discrete per avvisare delle chiamate schermate e dello stato del plafond SMS.</p>
+
+    <h3>E. Accesso a Internet (<code>android.permission.INTERNET</code>)</h3>
+    <p>Utilizzato esclusivamente per il controllo facoltativo di aggiornamenti software tramite le API pubbliche di GitHub e per consentire all'utente di aprire facoltativamente il link di donazione PayPal.me dello sviluppatore.</p>
+
+    <h2>3. Conservazione dei Dati</h2>
+    <p>Tutti i registri delle chiamate e le preferenze risiedono nella memoria interna protetta dell'applicazione e possono essere azzerati in qualsiasi momento tramite il pulsante "Svuota registro" o disinstallando l'app.</p>
+
+    <h2>4. Contatti</h2>
+    <p>Per maggiori dettagli o per consultare il codice sorgente completo, visita il repository ufficiale:</p>
+    <p><a href="https://github.com/iylistenfree/nocallcenter" target="_blank" rel="noopener">https://github.com/iylistenfree/nocallcenter</a></p>
+
+    <footer>
+        NoCallCenter &copy; 2026 – Rilasciato sotto Licenza MIT
+    </footer>
+</div>
+
+</body>
+</html>

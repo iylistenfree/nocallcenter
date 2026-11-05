@@ -14,4 +14,8 @@
 .cxx
 local.properties
 *.apk
+*.aab
+*.keystore
+*.jks
+galaxy_store_submission/KEYSTORE_INFO.md
 app/build/
