@@ -66,12 +66,58 @@
     <string name="status_blocked_sms_skipped_flood">Blocked (Anti-Flood)</string>
     <string name="status_blocked_sms_skipped_budget">Blocked (Budget Limit)</string>
     <string name="status_blocked_sms_disabled">Blocked (SMS Disabled)</string>
+    <string name="status_blocked_foreign_prefix">Blocked (Foreign Prefix)</string>
+    <string name="note_blocked_extra_eu_prefix">Blocked Extra-EU prefix (%1$s)</string>
+    <string name="note_blocked_eu_prefix">Blocked EU prefix: %1$s (%2$s)</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
     <string name="settings_screening_section">Call Screening</string>
     <string name="setting_block_non_contacts">Filter Unknown Callers</string>
     <string name="setting_block_non_contacts_desc">Automatically silence and decline calls from numbers not saved in your contacts.</string>
+    
+    <!-- Foreign & International Calls -->
+    <string name="settings_foreign_section">Foreign &amp; International Calls</string>
+    <string name="setting_block_extra_eu">Block Extra-EU Numbers</string>
+    <string name="setting_block_extra_eu_desc">Decline incoming calls from countries outside the European Union in bulk (e.g. UK +44, Albania +355, Tunisia +216, USA +1).</string>
+    <string name="setting_block_eu">Block European Union (EU) Numbers</string>
+    <string name="setting_block_eu_desc">Decline calls from EU countries except those selected as allowed exceptions.</string>
+    <string name="setting_manage_eu_exceptions">Allowed EU Countries (Exceptions)</string>
+    <string name="setting_manage_eu_exceptions_desc">%1$d of %2$d EU countries allowed</string>
+    <string name="dialog_select_eu_prefixes_title">Allowed EU Countries</string>
+    <string name="dialog_select_eu_prefixes_desc">Selected countries are excluded from blocking and will be allowed to call.</string>
+    <string name="action_select_all">Select All</string>
+    <string name="action_deselect_all">Deselect All</string>
+    <string name="search_country_hint">Search country or prefix...</string>
+    <string name="no_countries_found">No countries found</string>
+
+    <!-- EU Countries -->
+    <string name="country_austria">Austria</string>
+    <string name="country_belgium">Belgium</string>
+    <string name="country_bulgaria">Bulgaria</string>
+    <string name="country_croatia">Croatia</string>
+    <string name="country_cyprus">Cyprus</string>
+    <string name="country_czechia">Czech Republic</string>
+    <string name="country_denmark">Denmark</string>
+    <string name="country_estonia">Estonia</string>
+    <string name="country_finland">Finland</string>
+    <string name="country_france">France</string>
+    <string name="country_germany">Germany</string>
+    <string name="country_greece">Greece</string>
+    <string name="country_hungary">Hungary</string>
+    <string name="country_ireland">Ireland</string>
+    <string name="country_latvia">Latvia</string>
+    <string name="country_lithuania">Lithuania</string>
+    <string name="country_luxembourg">Luxembourg</string>
+    <string name="country_malta">Malta</string>
+    <string name="country_netherlands">Netherlands</string>
+    <string name="country_poland">Poland</string>
+    <string name="country_portugal">Portugal</string>
+    <string name="country_romania">Romania</string>
+    <string name="country_slovakia">Slovakia</string>
+    <string name="country_slovenia">Slovenia</string>
+    <string name="country_spain">Spain</string>
+    <string name="country_sweden">Sweden</string>
     
     <string name="settings_sms_section">Auto-Response SMS</string>
     <string name="setting_enable_sms">Send Automatic SMS</string>
@@ -102,6 +148,7 @@
     <!-- Shared Actions & Badges -->
     <string name="btn_cancel">Cancel</string>
     <string name="btn_close">Close</string>
+    <string name="btn_manage">Manage</string>
     <string name="btn_reset_default">Default</string>
     <string name="btn_check_grant_permissions">Check &amp; Grant Permissions</string>
     <string name="badge_contacts">Contacts</string>

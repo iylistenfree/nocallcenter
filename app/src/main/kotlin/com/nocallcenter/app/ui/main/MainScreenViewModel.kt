@@ -63,6 +63,14 @@ class MainScreenViewModel(private val repository: DataRepository) : ViewModel() 
 
     fun setBlockNonContacts(enabled: Boolean) = repository.setBlockNonContacts(enabled)
 
+    fun setBlockExtraEuCalls(enabled: Boolean) = repository.setBlockExtraEuCalls(enabled)
+
+    fun setBlockEuCalls(enabled: Boolean) = repository.setBlockEuCalls(enabled)
+
+    fun setExcludedEuPrefixes(prefixes: Set<String>) = repository.setExcludedEuPrefixes(prefixes)
+
+    fun toggleExcludedEuPrefix(prefix: String) = repository.toggleExcludedEuPrefix(prefix)
+
     fun setAutoSmsEnabled(enabled: Boolean) = repository.setAutoSmsEnabled(enabled)
 
     fun setBudgetingEnabled(enabled: Boolean) = repository.setBudgetingEnabled(enabled)

@@ -21,6 +21,18 @@ class AppPreferences(private val context: Context) {
         get() = prefs.getBoolean(KEY_BLOCK_NON_CONTACTS, true)
         set(value) = prefs.edit().putBoolean(KEY_BLOCK_NON_CONTACTS, value).apply()
 
+    var blockExtraEuCalls: Boolean
+        get() = prefs.getBoolean(KEY_BLOCK_EXTRA_EU_CALLS, false)
+        set(value) = prefs.edit().putBoolean(KEY_BLOCK_EXTRA_EU_CALLS, value).apply()
+
+    var blockEuCalls: Boolean
+        get() = prefs.getBoolean(KEY_BLOCK_EU_CALLS, false)
+        set(value) = prefs.edit().putBoolean(KEY_BLOCK_EU_CALLS, value).apply()
+
+    var excludedEuPrefixes: Set<String>
+        get() = prefs.getStringSet(KEY_EXCLUDED_EU_PREFIXES, emptySet()) ?: emptySet()
+        set(value) = prefs.edit().putStringSet(KEY_EXCLUDED_EU_PREFIXES, value).apply()
+
     var isAutoSmsEnabled: Boolean
         get() = prefs.getBoolean(KEY_AUTO_SMS_ENABLED, true)
         set(value) = prefs.edit().putBoolean(KEY_AUTO_SMS_ENABLED, value).apply()
@@ -80,6 +92,9 @@ class AppPreferences(private val context: Context) {
         private const val KEY_IS_FIRST_LAUNCH = "pref_is_first_launch"
         private const val KEY_SCREENING_ENABLED = "pref_screening_enabled"
         private const val KEY_BLOCK_NON_CONTACTS = "pref_block_non_contacts"
+        private const val KEY_BLOCK_EXTRA_EU_CALLS = "pref_block_extra_eu_calls"
+        private const val KEY_BLOCK_EU_CALLS = "pref_block_eu_calls"
+        private const val KEY_EXCLUDED_EU_PREFIXES = "pref_excluded_eu_prefixes"
         private const val KEY_AUTO_SMS_ENABLED = "pref_auto_sms_enabled"
         private const val KEY_BUDGETING_ENABLED = "pref_budgeting_enabled"
         private const val KEY_SMS_BUDGET_LIMIT = "pref_sms_budget_limit"

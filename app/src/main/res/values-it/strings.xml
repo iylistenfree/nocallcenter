@@ -66,12 +66,58 @@
     <string name="status_blocked_sms_skipped_flood">Bloccata (Anti-Flood 48h)</string>
     <string name="status_blocked_sms_skipped_budget">Bloccata (Limite SMS raggiunto)</string>
     <string name="status_blocked_sms_disabled">Bloccata (SMS Disattivato)</string>
+    <string name="status_blocked_foreign_prefix">Bloccata (Prefisso Estero)</string>
+    <string name="note_blocked_extra_eu_prefix">Prefisso Extra-UE bloccato (%1$s)</string>
+    <string name="note_blocked_eu_prefix">Prefisso UE bloccato: %1$s (%2$s)</string>
 
     <!-- Settings -->
     <string name="settings_title">Impostazioni</string>
     <string name="settings_screening_section">Filtro Chiamate</string>
     <string name="setting_block_non_contacts">Blocca Numeri Fuori Rubrica</string>
     <string name="setting_block_non_contacts_desc">Rifiuta e silenzia istantaneamente le chiamate da numeri non memorizzati nei contatti.</string>
+    
+    <!-- Foreign & International Calls -->
+    <string name="settings_foreign_section">Chiamate Estere &amp; Internazionali</string>
+    <string name="setting_block_extra_eu">Blocca Numeri Extra-UE</string>
+    <string name="setting_block_extra_eu_desc">Rifiuta in blocco tutte le chiamate da paesi al di fuori dell\'Unione Europea (es. Regno Unito +44, Albania +355, Tunisia +216, USA +1).</string>
+    <string name="setting_block_eu">Blocca Numeri Unione Europea (UE)</string>
+    <string name="setting_block_eu_desc">Rifiuta le chiamate provenienti da paesi UE ad eccezione di quelli selezionati come eccezioni consentite.</string>
+    <string name="setting_manage_eu_exceptions">Prefissi UE Consentiti (Eccezioni)</string>
+    <string name="setting_manage_eu_exceptions_desc">%1$d su %2$d paesi UE autorizzati</string>
+    <string name="dialog_select_eu_prefixes_title">Paesi UE Autorizzati</string>
+    <string name="dialog_select_eu_prefixes_desc">I paesi selezionati saranno esclusi dal blocco e autorizzati a farti squillare il telefono.</string>
+    <string name="action_select_all">Seleziona tutti</string>
+    <string name="action_deselect_all">Deseleziona tutti</string>
+    <string name="search_country_hint">Cerca paese o prefisso...</string>
+    <string name="no_countries_found">Nessun paese trovato</string>
+
+    <!-- EU Countries -->
+    <string name="country_austria">Austria</string>
+    <string name="country_belgium">Belgio</string>
+    <string name="country_bulgaria">Bulgaria</string>
+    <string name="country_croatia">Croazia</string>
+    <string name="country_cyprus">Cipro</string>
+    <string name="country_czechia">Repubblica Ceca</string>
+    <string name="country_denmark">Danimarca</string>
+    <string name="country_estonia">Estonia</string>
+    <string name="country_finland">Finlandia</string>
+    <string name="country_france">Francia</string>
+    <string name="country_germany">Germania</string>
+    <string name="country_greece">Grecia</string>
+    <string name="country_hungary">Ungheria</string>
+    <string name="country_ireland">Irlanda</string>
+    <string name="country_latvia">Lettonia</string>
+    <string name="country_lithuania">Lituania</string>
+    <string name="country_luxembourg">Lussemburgo</string>
+    <string name="country_malta">Malta</string>
+    <string name="country_netherlands">Paesi Bassi</string>
+    <string name="country_poland">Polonia</string>
+    <string name="country_portugal">Portogallo</string>
+    <string name="country_romania">Romania</string>
+    <string name="country_slovakia">Slovacchia</string>
+    <string name="country_slovenia">Slovenia</string>
+    <string name="country_spain">Spagna</string>
+    <string name="country_sweden">Svezia</string>
     
     <string name="settings_sms_section">Risposta Automatica via SMS</string>
     <string name="setting_enable_sms">Invia SMS Automatico</string>
@@ -102,6 +148,7 @@
     <!-- Shared Actions & Badges -->
     <string name="btn_cancel">Annulla</string>
     <string name="btn_close">Chiudi</string>
+    <string name="btn_manage">Gestisci</string>
     <string name="btn_reset_default">Predefinito</string>
     <string name="btn_check_grant_permissions">Verifica e Concedi Permessi</string>
     <string name="badge_contacts">Rubrica</string>

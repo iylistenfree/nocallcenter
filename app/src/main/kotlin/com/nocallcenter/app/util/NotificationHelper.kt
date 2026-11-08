@@ -98,6 +98,10 @@ class NotificationHelper(private val context: Context) {
                 context.getString(R.string.status_blocked_sms_disabled),
                 phoneNumber
             )
+            CallScreeningOutcome.BLOCKED_FOREIGN_PREFIX -> Pair(
+                context.getString(R.string.status_blocked_foreign_prefix),
+                phoneNumber
+            )
             CallScreeningOutcome.ALLOWED_CONTACT -> return
         }
 

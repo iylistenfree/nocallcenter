@@ -40,6 +40,31 @@ class MainScreenViewModelTest {
         viewModel.completeFirstLaunch()
         assertEquals(false, repo.appState.value.isFirstLaunch)
     }
+
+    @Test
+    fun testForeignPrefixSettings() = runTest {
+        val repo = FakeDataRepository()
+        val viewModel = MainScreenViewModel(repo)
+
+        assertEquals(false, repo.appState.value.blockExtraEuCalls)
+        assertEquals(false, repo.appState.value.blockEuCalls)
+        assertTrue(repo.appState.value.excludedEuPrefixes.isEmpty())
+
+        viewModel.setBlockExtraEuCalls(true)
+        assertEquals(true, repo.appState.value.blockExtraEuCalls)
+
+        viewModel.setBlockEuCalls(true)
+        assertEquals(true, repo.appState.value.blockEuCalls)
+
+        viewModel.toggleExcludedEuPrefix("+33")
+        assertTrue(repo.appState.value.excludedEuPrefixes.contains("+33"))
+
+        viewModel.toggleExcludedEuPrefix("+33")
+        assertTrue(!repo.appState.value.excludedEuPrefixes.contains("+33"))
+
+        viewModel.setExcludedEuPrefixes(setOf("+49", "+34"))
+        assertEquals(setOf("+49", "+34"), repo.appState.value.excludedEuPrefixes)
+    }
 }
 
 private class FakeDataRepository : DataRepository {
@@ -50,6 +75,14 @@ private class FakeDataRepository : DataRepository {
     override fun completeFirstLaunch() { _state.value = _state.value.copy(isFirstLaunch = false) }
     override fun setScreeningEnabled(enabled: Boolean) { _state.value = _state.value.copy(isScreeningEnabled = enabled) }
     override fun setBlockNonContacts(enabled: Boolean) { _state.value = _state.value.copy(blockNonContacts = enabled) }
+    override fun setBlockExtraEuCalls(enabled: Boolean) { _state.value = _state.value.copy(blockExtraEuCalls = enabled) }
+    override fun setBlockEuCalls(enabled: Boolean) { _state.value = _state.value.copy(blockEuCalls = enabled) }
+    override fun setExcludedEuPrefixes(prefixes: Set<String>) { _state.value = _state.value.copy(excludedEuPrefixes = prefixes) }
+    override fun toggleExcludedEuPrefix(prefix: String) {
+        val current = _state.value.excludedEuPrefixes.toMutableSet()
+        if (current.contains(prefix)) current.remove(prefix) else current.add(prefix)
+        _state.value = _state.value.copy(excludedEuPrefixes = current)
+    }
     override fun setAutoSmsEnabled(enabled: Boolean) { _state.value = _state.value.copy(isAutoSmsEnabled = enabled) }
     override fun setBudgetingEnabled(enabled: Boolean) { _state.value = _state.value.copy(isBudgetingEnabled = enabled) }
     override fun setSmsBudgetLimit(limit: Int) { _state.value = _state.value.copy(smsBudgetLimit = limit) }

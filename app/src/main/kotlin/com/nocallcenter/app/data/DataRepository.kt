@@ -15,6 +15,9 @@ data class AppState(
     val isFirstLaunch: Boolean = false,
     val isScreeningEnabled: Boolean = true,
     val blockNonContacts: Boolean = true,
+    val blockExtraEuCalls: Boolean = false,
+    val blockEuCalls: Boolean = false,
+    val excludedEuPrefixes: Set<String> = emptySet(),
     val isAutoSmsEnabled: Boolean = true,
     val isBudgetingEnabled: Boolean = true,
     val smsBudgetLimit: Int = 40,
@@ -35,6 +38,10 @@ interface DataRepository {
     fun completeFirstLaunch()
     fun setScreeningEnabled(enabled: Boolean)
     fun setBlockNonContacts(enabled: Boolean)
+    fun setBlockExtraEuCalls(enabled: Boolean)
+    fun setBlockEuCalls(enabled: Boolean)
+    fun setExcludedEuPrefixes(prefixes: Set<String>)
+    fun toggleExcludedEuPrefix(prefix: String)
     fun setAutoSmsEnabled(enabled: Boolean)
     fun setBudgetingEnabled(enabled: Boolean)
     fun setSmsBudgetLimit(limit: Int)
@@ -72,6 +79,9 @@ class DefaultDataRepository(private val context: Context) : DataRepository {
             isFirstLaunch = prefs.isFirstLaunch,
             isScreeningEnabled = prefs.isScreeningEnabled,
             blockNonContacts = prefs.blockNonContacts,
+            blockExtraEuCalls = prefs.blockExtraEuCalls,
+            blockEuCalls = prefs.blockEuCalls,
+            excludedEuPrefixes = prefs.excludedEuPrefixes,
             isAutoSmsEnabled = prefs.isAutoSmsEnabled,
             isBudgetingEnabled = prefs.isBudgetingEnabled,
             smsBudgetLimit = prefs.smsBudgetLimit,
@@ -103,6 +113,32 @@ class DefaultDataRepository(private val context: Context) : DataRepository {
 
     override fun setBlockNonContacts(enabled: Boolean) {
         prefs.blockNonContacts = enabled
+        reloadState()
+    }
+
+    override fun setBlockExtraEuCalls(enabled: Boolean) {
+        prefs.blockExtraEuCalls = enabled
+        reloadState()
+    }
+
+    override fun setBlockEuCalls(enabled: Boolean) {
+        prefs.blockEuCalls = enabled
+        reloadState()
+    }
+
+    override fun setExcludedEuPrefixes(prefixes: Set<String>) {
+        prefs.excludedEuPrefixes = prefixes
+        reloadState()
+    }
+
+    override fun toggleExcludedEuPrefix(prefix: String) {
+        val current = prefs.excludedEuPrefixes.toMutableSet()
+        if (current.contains(prefix)) {
+            current.remove(prefix)
+        } else {
+            current.add(prefix)
+        }
+        prefs.excludedEuPrefixes = current
         reloadState()
     }
 

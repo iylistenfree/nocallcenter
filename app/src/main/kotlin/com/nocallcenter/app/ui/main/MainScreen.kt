@@ -10,6 +10,7 @@ import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -35,6 +36,7 @@ import com.nocallcenter.app.R
 import com.nocallcenter.app.data.AppState
 import com.nocallcenter.app.data.model.CallScreeningOutcome
 import com.nocallcenter.app.data.model.ScreenedCall
+import com.nocallcenter.app.util.CountryPrefixHelper
 import com.nocallcenter.app.util.UpdateCheckResult
 import com.nocallcenter.app.util.UpdateInfo
 import java.text.SimpleDateFormat
@@ -79,9 +81,9 @@ fun MainScreen(
 
     val versionName = remember {
         try {
-            context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "1.1.1"
+            context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "1.2.0"
         } catch (e: Exception) {
-            "1.1.1"
+            "1.2.0"
         }
     }
 
@@ -780,6 +782,7 @@ fun ScreenedCallItem(call: ScreenedCall) {
                     CallScreeningOutcome.BLOCKED_SMS_SENT -> MaterialTheme.colorScheme.primary
                     CallScreeningOutcome.BLOCKED_ANTI_FLOOD -> Color(0xFFE65100)
                     CallScreeningOutcome.BLOCKED_BUDGET_EXCEEDED -> MaterialTheme.colorScheme.error
+                    CallScreeningOutcome.BLOCKED_FOREIGN_PREFIX -> Color(0xFF6A1B9A)
                     else -> MaterialTheme.colorScheme.outline
                 },
                 modifier = Modifier.padding(end = 12.dp)
@@ -834,6 +837,11 @@ fun OutcomeBadge(outcome: CallScreeningOutcome) {
             Color(0xFFF5F5F5),
             Color(0xFF616161)
         )
+        CallScreeningOutcome.BLOCKED_FOREIGN_PREFIX -> Triple(
+            stringResource(R.string.status_blocked_foreign_prefix),
+            Color(0xFFEDE7F6),
+            Color(0xFF512DA8)
+        )
         CallScreeningOutcome.ALLOWED_CONTACT -> Triple(
             stringResource(R.string.badge_contacts),
             Color(0xFFE3F2FD),
@@ -864,6 +872,21 @@ fun SettingsContent(
 ) {
     val context = LocalContext.current
     var editingTemplate by remember(state.smsTemplate) { mutableStateOf(state.smsTemplate) }
+    var showEuCountriesDialog by remember { mutableStateOf(false) }
+
+    if (showEuCountriesDialog) {
+        EuCountriesDialog(
+            selectedPrefixes = state.excludedEuPrefixes,
+            onTogglePrefix = { viewModel.toggleExcludedEuPrefix(it) },
+            onSelectAll = {
+                viewModel.setExcludedEuPrefixes(CountryPrefixHelper.EU_COUNTRIES.map { it.dialCode }.toSet())
+            },
+            onDeselectAll = {
+                viewModel.setExcludedEuPrefixes(emptySet())
+            },
+            onDismiss = { showEuCountriesDialog = false }
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -909,6 +932,108 @@ fun SettingsContent(
                         checked = state.blockNonContacts,
                         onCheckedChange = { viewModel.setBlockNonContacts(it) }
                     )
+                }
+            }
+        }
+
+        // Section: Foreign & International Calls
+        Text(
+            text = stringResource(R.string.settings_foreign_section),
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Bold
+        )
+
+        Card(shape = RoundedCornerShape(16.dp)) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp)
+            ) {
+                // Switch Extra-UE
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringResource(R.string.setting_block_extra_eu),
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Text(
+                            text = stringResource(R.string.setting_block_extra_eu_desc),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = state.blockExtraEuCalls,
+                        onCheckedChange = { viewModel.setBlockExtraEuCalls(it) }
+                    )
+                }
+
+                HorizontalDivider()
+
+                // Switch EU
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringResource(R.string.setting_block_eu),
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Text(
+                            text = stringResource(R.string.setting_block_eu_desc),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = state.blockEuCalls,
+                        onCheckedChange = { viewModel.setBlockEuCalls(it) }
+                    )
+                }
+
+                // If blockEuCalls is enabled, show the row to manage allowed exceptions
+                AnimatedVisibility(visible = state.blockEuCalls) {
+                    Surface(
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = stringResource(R.string.setting_manage_eu_exceptions),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                                Text(
+                                    text = stringResource(
+                                        R.string.setting_manage_eu_exceptions_desc,
+                                        state.excludedEuPrefixes.size,
+                                        CountryPrefixHelper.EU_COUNTRIES.size
+                                    ),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                            OutlinedButton(onClick = { showEuCountriesDialog = true }) {
+                                Text(stringResource(R.string.btn_manage))
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -1464,6 +1589,148 @@ fun PermissionGuideDialog(onDismiss: () -> Unit) {
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.btn_close))
+            }
+        }
+    )
+}
+
+@Composable
+fun EuCountriesDialog(
+    selectedPrefixes: Set<String>,
+    onTogglePrefix: (String) -> Unit,
+    onSelectAll: () -> Unit,
+    onDeselectAll: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    var searchQuery by remember { mutableStateOf("") }
+    val context = LocalContext.current
+
+    val filteredCountries = remember(searchQuery) {
+        if (searchQuery.isBlank()) {
+            CountryPrefixHelper.EU_COUNTRIES
+        } else {
+            val q = searchQuery.trim().lowercase()
+            CountryPrefixHelper.EU_COUNTRIES.filter { country ->
+                val countryName = context.getString(country.nameResId).lowercase()
+                countryName.contains(q) || country.dialCode.contains(q) || country.isoCode.lowercase().contains(q)
+            }
+        }
+    }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(R.string.dialog_select_eu_prefixes_title),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 420.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.dialog_select_eu_prefixes_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    placeholder = { Text(stringResource(R.string.search_country_hint)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    leadingIcon = {
+                        Icon(Icons.Default.Search, contentDescription = null)
+                    },
+                    trailingIcon = {
+                        if (searchQuery.isNotEmpty()) {
+                            IconButton(onClick = { searchQuery = "" }) {
+                                Icon(Icons.Default.Close, contentDescription = null)
+                            }
+                        }
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    TextButton(onClick = onSelectAll) {
+                        Text(stringResource(R.string.action_select_all), fontSize = 12.sp)
+                    }
+                    TextButton(onClick = onDeselectAll) {
+                        Text(stringResource(R.string.action_deselect_all), fontSize = 12.sp)
+                    }
+                }
+
+                HorizontalDivider()
+
+                if (filteredCountries.isEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(24.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = stringResource(R.string.no_countries_found),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                    ) {
+                        items(filteredCountries, key = { it.dialCode }) { country ->
+                            val isSelected = selectedPrefixes.contains(country.dialCode)
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { onTogglePrefix(country.dialCode) }
+                                    .padding(vertical = 8.dp, horizontal = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = country.flagEmoji,
+                                    fontSize = 20.sp,
+                                    modifier = Modifier.padding(end = 12.dp)
+                                )
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = stringResource(country.nameResId),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontWeight = FontWeight.Medium
+                                    )
+                                    Text(
+                                        text = country.dialCode,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                                Checkbox(
+                                    checked = isSelected,
+                                    onCheckedChange = { onTogglePrefix(country.dialCode) }
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            Button(onClick = onDismiss) {
                 Text(stringResource(R.string.btn_close))
             }
         }

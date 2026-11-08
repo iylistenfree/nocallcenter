@@ -13,6 +13,7 @@ import com.nocallcenter.app.data.model.CallScreeningOutcome
 import com.nocallcenter.app.data.preferences.AppPreferences
 import com.nocallcenter.app.util.BillingCycleHelper
 import com.nocallcenter.app.util.ContactsHelper
+import com.nocallcenter.app.util.CountryPrefixHelper
 import com.nocallcenter.app.util.NotificationHelper
 
 class NoCallCenterScreeningService : CallScreeningService() {
@@ -62,11 +63,55 @@ class NoCallCenterScreeningService : CallScreeningService() {
             return
         }
 
-        // NOT in contacts: Block and Screen!
-        blockCall(callDetails)
+        // Foreign Prefix Screening Check
+        val normalized = CountryPrefixHelper.normalizeNumber(rawNumber)
+        if (CountryPrefixHelper.isForeignNumber(normalized)) {
+            val euCountry = CountryPrefixHelper.getEuCountry(normalized)
+            if (euCountry != null) {
+                // Number from an EU country
+                if (prefs.blockEuCalls) {
+                    val isExcluded = prefs.excludedEuPrefixes.contains(euCountry.dialCode)
+                    if (!isExcluded) {
+                        blockCall(callDetails)
+                        val countryName = getString(euCountry.nameResId)
+                        val note = getString(R.string.note_blocked_eu_prefix, countryName, euCountry.dialCode)
+                        db.insertCall(
+                            phoneNumber = rawNumber,
+                            callerName = null,
+                            outcome = CallScreeningOutcome.BLOCKED_FOREIGN_PREFIX,
+                            notes = note
+                        )
+                        notifier.showCallScreenedNotification(rawNumber, CallScreeningOutcome.BLOCKED_FOREIGN_PREFIX)
+                        return
+                    }
+                }
+            } else {
+                // Number from an Extra-EU country
+                if (prefs.blockExtraEuCalls) {
+                    blockCall(callDetails)
+                    val dialCode = CountryPrefixHelper.extractDialCode(normalized)
+                    val note = getString(R.string.note_blocked_extra_eu_prefix, dialCode)
+                    db.insertCall(
+                        phoneNumber = rawNumber,
+                        callerName = null,
+                        outcome = CallScreeningOutcome.BLOCKED_FOREIGN_PREFIX,
+                        notes = note
+                    )
+                    notifier.showCallScreenedNotification(rawNumber, CallScreeningOutcome.BLOCKED_FOREIGN_PREFIX)
+                    return
+                }
+            }
+        }
 
-        // Process Auto-SMS logic
-        handleAutoSms(rawNumber, prefs, db, notifier)
+        if (prefs.blockNonContacts) {
+            // NOT in contacts: Block and Screen!
+            blockCall(callDetails)
+
+            // Process Auto-SMS logic
+            handleAutoSms(rawNumber, prefs, db, notifier)
+        } else {
+            respondToCall(callDetails, CallResponse.Builder().build())
+        }
     }
 
     private fun blockCall(callDetails: Call.Details) {
