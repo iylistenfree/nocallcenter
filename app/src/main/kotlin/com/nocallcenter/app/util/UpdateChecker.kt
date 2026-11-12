@@ -97,11 +97,11 @@ object UpdateChecker {
      * Returns true if latest is strictly newer than current.
      */
     fun isNewerVersion(current: String, latest: String): Boolean {
-        val cleanCurrent = current.removePrefix("v").removePrefix("V").trim()
-        val cleanLatest = latest.removePrefix("v").removePrefix("V").trim()
+        val cleanCurrent = current.trimStart('v', 'V', ' ', '.')
+        val cleanLatest = latest.trimStart('v', 'V', ' ', '.')
 
-        val currentParts = cleanCurrent.split(".").mapNotNull { it.toIntOrNull() }
-        val latestParts = cleanLatest.split(".").mapNotNull { it.toIntOrNull() }
+        val currentParts = cleanCurrent.split(".", "-").mapNotNull { it.toIntOrNull() }
+        val latestParts = cleanLatest.split(".", "-").mapNotNull { it.toIntOrNull() }
 
         if (currentParts.isEmpty() || latestParts.isEmpty()) {
             return cleanLatest != cleanCurrent && cleanLatest.isNotEmpty()

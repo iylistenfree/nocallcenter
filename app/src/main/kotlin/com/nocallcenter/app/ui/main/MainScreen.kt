@@ -84,9 +84,17 @@ fun MainScreen(
 
     val versionName = remember {
         try {
-            context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "1.2.0"
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                context.packageManager.getPackageInfo(
+                    context.packageName,
+                    android.content.pm.PackageManager.PackageInfoFlags.of(0)
+                ).versionName ?: "1.3.0"
+            } else {
+                @Suppress("DEPRECATION")
+                context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "1.3.0"
+            }
         } catch (e: Exception) {
-            "1.2.0"
+            "1.3.0"
         }
     }
 
