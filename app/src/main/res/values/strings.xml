@@ -59,9 +59,12 @@
 
     <!-- History / Call Log -->
     <string name="history_title">Screened Calls</string>
+    <string name="history_subtitle_hint">Tap a number to call back</string>
     <string name="history_empty">No screened calls yet. When an unknown number calls, it will appear here.</string>
     <string name="history_clear">Clear history</string>
     <string name="history_clear_confirm">Are you sure you want to clear the screened calls history?</string>
+    <string name="action_call_back">Call back</string>
+    <string name="action_call_number">Call %1$s</string>
     <string name="status_blocked_sms_sent">Blocked &amp; SMS Sent</string>
     <string name="status_blocked_sms_skipped_flood">Blocked (Anti-Flood)</string>
     <string name="status_blocked_sms_skipped_budget">Blocked (Budget Limit)</string>

@@ -18,6 +18,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.PhoneCallback
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -27,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -588,7 +591,7 @@ fun DashboardContent(
             StatCard(
                 title = stringResource(R.string.stat_sms_sent),
                 value = state.smsSentThisCycle.toString(),
-                icon = Icons.Default.Send,
+                icon = Icons.AutoMirrored.Filled.Send,
                 modifier = Modifier.weight(1f)
             )
         }
@@ -719,11 +722,20 @@ fun HistoryContent(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = stringResource(R.string.history_title),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
+            Column(modifier = Modifier.weight(1f, fill = false)) {
+                Text(
+                    text = stringResource(R.string.history_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                if (calls.isNotEmpty()) {
+                    Text(
+                        text = stringResource(R.string.history_subtitle_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
             if (calls.isNotEmpty()) {
                 IconButton(onClick = { showDialog = true }) {
                     Icon(
@@ -760,12 +772,44 @@ fun HistoryContent(
 }
 
 @Composable
-fun ScreenedCallItem(call: ScreenedCall) {
+fun ScreenedCallItem(
+    call: ScreenedCall,
+    onCallClick: ((String) -> Unit)? = null
+) {
+    val context = LocalContext.current
     val dateFormat = remember { SimpleDateFormat("dd MMM, HH:mm", Locale.getDefault()) }
     val formattedDate = remember(call.timestamp) { dateFormat.format(Date(call.timestamp)) }
+    val isDialable = remember(call.phoneNumber) { call.phoneNumber.any { it.isDigit() } }
+
+    val handleCall = {
+        if (isDialable) {
+            if (onCallClick != null) {
+                onCallClick(call.phoneNumber)
+            } else {
+                try {
+                    val intent = Intent(Intent.ACTION_DIAL).apply {
+                        data = Uri.parse("tel:${Uri.encode(call.phoneNumber.trim())}")
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                    context.startActivity(intent)
+                } catch (_: Exception) {
+                }
+            }
+        }
+    }
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(
+                if (isDialable) {
+                    Modifier.clickable(
+                        role = Role.Button,
+                        onClickLabel = stringResource(R.string.action_call_number, call.phoneNumber),
+                        onClick = handleCall
+                    )
+                } else Modifier
+            ),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
@@ -809,7 +853,32 @@ fun ScreenedCallItem(call: ScreenedCall) {
                 )
             }
 
-            OutcomeBadge(outcome = call.outcome)
+            Column(
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.Center
+            ) {
+                OutcomeBadge(outcome = call.outcome)
+                if (isDialable) {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(2.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.PhoneCallback,
+                            contentDescription = stringResource(R.string.action_call_back),
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(13.dp)
+                        )
+                        Text(
+                            text = stringResource(R.string.action_call_back),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+            }
         }
     }
 }

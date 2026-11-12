@@ -65,6 +65,30 @@ class MainScreenViewModelTest {
         viewModel.setExcludedEuPrefixes(setOf("+49", "+34"))
         assertEquals(setOf("+49", "+34"), repo.appState.value.excludedEuPrefixes)
     }
+
+    @Test
+    fun testClearCallHistory() = runTest {
+        val repo = FakeDataRepository()
+        val viewModel = MainScreenViewModel(repo)
+
+        viewModel.clearCallHistory()
+        assertEquals(emptyList<com.nocallcenter.app.data.model.ScreenedCall>(), repo.appState.value.screenedCalls)
+    }
+
+    @Test
+    fun testDialableNumberRecognition() {
+        val dialableCall = com.nocallcenter.app.data.model.ScreenedCall(
+            phoneNumber = "+39 340 1234567",
+            outcome = com.nocallcenter.app.data.model.CallScreeningOutcome.BLOCKED_SMS_SENT
+        )
+        val anonymousCall = com.nocallcenter.app.data.model.ScreenedCall(
+            phoneNumber = "Sconosciuto",
+            outcome = com.nocallcenter.app.data.model.CallScreeningOutcome.BLOCKED_SMS_DISABLED
+        )
+
+        assertTrue(dialableCall.phoneNumber.any { it.isDigit() })
+        assertTrue(!anonymousCall.phoneNumber.any { it.isDigit() })
+    }
 }
 
 private class FakeDataRepository : DataRepository {

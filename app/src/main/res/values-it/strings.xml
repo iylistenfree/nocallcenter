@@ -59,9 +59,12 @@
 
     <!-- History / Call Log -->
     <string name="history_title">Chiamate Schermate</string>
+    <string name="history_subtitle_hint">Tocca un numero per richiamarlo</string>
     <string name="history_empty">Nessuna chiamata schermata finora. Quando un numero sconosciuto chiamerà, comparirà qui.</string>
     <string name="history_clear">Svuota registro</string>
     <string name="history_clear_confirm">Vuoi davvero cancellare la cronologia delle chiamate schermate?</string>
+    <string name="action_call_back">Richiama</string>
+    <string name="action_call_number">Chiama %1$s</string>
     <string name="status_blocked_sms_sent">Bloccata &amp; SMS Inviato</string>
     <string name="status_blocked_sms_skipped_flood">Bloccata (Anti-Flood 48h)</string>
     <string name="status_blocked_sms_skipped_budget">Bloccata (Limite SMS raggiunto)</string>
